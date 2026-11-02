@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+*.autozoom.mp4
+*.preview.mp4
+*.autozoom.json
+.DS_Store

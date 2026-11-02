@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autozoom"
+version = "0.1.0"
+description = "Free, local Screen Studio alternative: automatic smooth zooms, backgrounds, rounded corners and shadows for any screen recording."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+authors = [{ name = "thecidsama" }]
+keywords = ["screen recording", "screen studio", "zoom", "video", "demo", "ffmpeg", "opencv"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Multimedia :: Video",
+    "Environment :: Console",
+]
+dependencies = [
+    "numpy>=1.24",
+    "opencv-python-headless>=4.8",
+    "imageio-ffmpeg>=0.4.9",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+autozoom = "autozoom.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/thecidsama/autozoom"
+
+[tool.setuptools]
+packages = ["autozoom", "autozoom.editor"]
+
+[tool.setuptools.package-data]
+"autozoom.editor" = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

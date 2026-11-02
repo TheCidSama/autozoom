@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>autozoom editor</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo">&#9673;</span> autozoom <span id="filename" class="filename"></span></div>
+  <div class="actions">
+    <label class="inline">Max zoom <input id="maxZoom" type="number" min="1.1" max="4" step="0.1" value="2"></label>
+    <button id="reanalyze" class="ghost" title="Run automatic analysis again (replaces the zooms)">Re-analyze</button>
+    <span id="saveState" class="muted">Saved</span>
+    <button id="renderBtn" class="primary">Render</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="stage-wrap">
+    <div class="stage-toolbar">
+      <div class="seg-toggle" role="tablist">
+        <button id="modePreview" class="on" title="Live preview with zooms and style">Preview</button>
+        <button id="modeFull" title="Whole frame with zoom rectangles">Full frame</button>
+      </div>
+      <span id="hint" class="muted">Select a zoom block, then click the video to set where it zooms.</span>
+    </div>
+    <div id="stage" class="stage">
+      <div id="canvas" class="canvas">
+        <div id="win" class="win">
+          <div id="titlebar" class="titlebar"><i></i><i></i><i></i></div>
+          <div id="viewport" class="viewport">
+            <video id="video" src="/video" preload="auto" playsinline></video>
+            <div id="viewRect" class="view-rect hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="transport">
+      <button id="play" class="icon" title="Play/Pause (Space)">&#9654;</button>
+      <span id="time" class="time">0:00.0 / 0:00.0</span>
+      <button id="addZoom" class="ghost small" title="Add a zoom at the playhead (Z)">+ Add zoom</button>
+    </div>
+    <div id="timeline" class="timeline">
+      <div id="ruler" class="ruler"></div>
+      <div id="film" class="film"></div>
+      <div id="track" class="track" title="Double-click to add a zoom"></div>
+      <div id="playhead" class="playhead"></div>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <div class="card" id="segCard">
+      <h3>Zoom</h3>
+      <div id="segEmpty" class="muted small">No zoom selected. Click a block on the timeline, or double-click the track to add one.</div>
+      <div id="segForm" class="hidden">
+        <div class="row"><label>Start</label><input id="segStart" type="number" step="0.1" min="0"><span class="unit">s</span></div>
+        <div class="row"><label>End</label><input id="segEnd" type="number" step="0.1" min="0"><span class="unit">s</span></div>
+        <div class="row"><label>Zoom</label><input id="segZoom" type="range" min="1" max="4" step="0.05"><span id="segZoomVal" class="unit"></span></div>
+        <div class="row"><label>Center</label><span id="segCenter" class="mono"></span></div>
+        <div class="row"><label>Follow</label><span id="segPath" class="muted small"></span></div>
+        <button id="segDelete" class="danger small">Delete zoom</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Style</h3>
+      <div id="swatches" class="swatches"></div>
+      <div class="row"><label>Color</label><input id="bgHex" type="text" placeholder="#hex or image path"></div>
+      <div class="row"><label>Padding</label><input id="padding" type="range" min="0" max="20" step="0.5" value="8"><span id="paddingVal" class="unit"></span></div>
+      <div class="row"><label>Radius</label><input id="radius" type="range" min="0" max="48" step="1" value="16"><span id="radiusVal" class="unit"></span></div>
+      <div class="row"><label>Shadow</label><input id="shadow" type="checkbox" checked></div>
+      <div class="row"><label>Window</label>
+        <select id="frame"><option value="none">None</option><option value="light">macOS light</option><option value="dark">macOS dark</option></select></div>
+      <div class="row"><label>Aspect</label><select id="aspect"></select></div>
+      <div class="row"><label>Motion blur</label><input id="motionBlur" type="checkbox" checked></div>
+    </div>
+
+    <div class="card">
+      <h3>Export</h3>
+      <div class="row"><label>Quick draft</label><input id="draft" type="checkbox"><span class="muted small">half-res, fast</span></div>
+      <div id="renderStatus" class="render-status muted small">Ready.</div>
+      <div class="progress"><div id="progressBar"></div></div>
+      <div id="renderDone" class="hidden">
+        <a id="openOutput" href="/output" target="_blank">Open rendered video</a>
+        <div id="outPath" class="mono small"></div>
+      </div>
+    </div>
+  </aside>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

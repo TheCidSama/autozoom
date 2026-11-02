@@ -19,8 +19,6 @@ Other styles from the same recording: `--background midnight --frame dark`, `--a
 
 ![styles](docs/styles.jpg)
 
-> These images come from the synthetic recording made by [`examples/make_demo.py`](examples/make_demo.py), so you can reproduce them yourself (see [Reproduce the demo](#reproduce-the-demo)).
-
 ## Install
 
 Python 3.9+ is the only requirement. ffmpeg ships inside the `imageio-ffmpeg` wheel, so you don't need a system ffmpeg.
@@ -158,26 +156,11 @@ Be aware: because autozoom infers activity from pixels, **it is less precise tha
 - Videos that play inside the recording, or large animated regions, can attract zooms or block them (big changes count as "global").
 - The editor preview approximates the render (CSS gradient vs. the rendered gradient, no motion blur). Image backgrounds show as a placeholder in the preview.
 - The browser must be able to play H.264 MP4. Every mainstream browser can, but some open-source Chromium builds cannot.
-- So far it has been tested mainly on synthetic recordings (see below). Please report recordings where it guesses badly.
+- So far it has been tested mainly on synthetic recordings. Please report recordings where it guesses badly.
 
-## Reproduce the demo
+## Code layout
 
-```bash
-python examples/make_demo.py demo.mov                   # 1920x1080 30 fps with audio, ~2 s to generate
-python examples/make_demo.py idle.mov --scenario idle   # only a blinking caret, a clock and a wandering cursor: should produce no zooms
-autozoom demo.mov
-```
-
-`make_demo.py` draws a fake desktop app and scripts: an idle period, a cursor gliding to a button, a click that opens a menu, typing into a form, a full-screen scroll, and a chart that animates after a click. Pass `--size 2560x1440 --fps 60` for a bigger test.
-
-## Development
-
-```bash
-pip install -e ".[test]"
-pytest            # 22 tests, ~4 s: plan generation on synthetic videos, spring camera, end-to-end renders
-```
-
-Layout: `autozoom/analyze.py` (activity to zoom plan), `camera.py` (spring camera), `style.py` (backgrounds, layout, corners, shadow, frame), `render.py` (streaming renderer), `media.py` (ffmpeg pipes), `plan.py` (plan JSON), `editor/` (web editor), `cli.py`.
+`autozoom/analyze.py` (activity to zoom plan), `camera.py` (spring camera), `style.py` (backgrounds, layout, corners, shadow, frame), `render.py` (streaming renderer), `media.py` (ffmpeg pipes), `plan.py` (plan JSON), `editor/` (web editor), `cli.py`.
 
 ## License
 

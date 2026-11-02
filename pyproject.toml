@@ -24,9 +24,6 @@ dependencies = [
     "imageio-ffmpeg>=0.4.9",
 ]
 
-[project.optional-dependencies]
-test = ["pytest>=7"]
-
 [project.scripts]
 autozoom = "autozoom.cli:main"
 
@@ -39,5 +36,3 @@ packages = ["autozoom", "autozoom.editor"]
 [tool.setuptools.package-data]
 "autozoom.editor" = ["static/*"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
